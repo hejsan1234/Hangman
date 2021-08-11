@@ -50,11 +50,14 @@ def isWordGuessed(secretWord, lettersGuessed):
     returns: boolean, True if all the letters of secretWord are in lettersGuessed;
       False otherwise
     '''
-    for i in secretWord:
-      if i in lettersGuessed:
-          return True
+    for char in secretWord:
+      if (char in lettersGuessed) == False:
+        guessed = False
+        break
       else:
-          return False
+        guessed = True
+
+    return guessed
 
 
 
@@ -71,7 +74,7 @@ def getGuessedWord(secretWord, lettersGuessed):
         if i in lettersGuessed:
             word.append(i)
         else:
-            word.append('_')
+            word.append('_ ')
     return str1.join(word)
 
 
@@ -118,33 +121,32 @@ def hangman(secretWord):
     print('The word im thinking of is ' + str(len(secretWord)) + ' letters long!')
     
     while True:
-
+        
+        print('You have ' + str(guesses) + ' guesses left')
         guess = input('Guess with a letter: ')
         correct_guess = guess.lower()
         lettersGuessed.append(correct_guess)
-        
-        print('You have ' + str(guesses) + ' left')
     
         if isWordGuessed(secretWord, lettersGuessed) == True:
-            print('You are correct, ' + secretWord + ' is my secret word and therefore you win')
-            return False
+            print('You are correct, ' + secretWord + ' is my secret word and therefore you win!!!!\nCongratulations!!!')
+            break
         
-        elif guesses == 0:
-            print('you have' + str(guesses) + ' left and therefore you lost the game the secret word was' + secretWord)
-            return False
+        elif guesses == 1:
+            print('you have 0 guesses left and therefore you lost the game! \nThe secret word was ' + secretWord + '\n')
+            break
         
         elif correct_guess in secretWord:
             print('you are correct, ' + correct_guess + ' is in my secret word')
             print(getGuessedWord(secretWord, lettersGuessed))
             print(getAvailableLetters(lettersGuessed))
-            return True
+            
         
         else:
             print('you are not correct, ' + correct_guess + ' is not in my secret word')
             print(getGuessedWord(secretWord, lettersGuessed))
             print(getAvailableLetters(lettersGuessed))
             guesses -= 1
-            return True
+            
         
 
 
